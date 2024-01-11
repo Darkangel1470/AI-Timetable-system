@@ -89,104 +89,12 @@ const ManageTimetable = () => {
 				{/* add subject> */}
 				<Button
 					onClick={() => {
-						setShowForm(!showForm);
-						console.log('subjects :>> ', subjects);
+						setShowForm(!showForm)
 					}}
 					className="w-28 h-15 bg-violet-400 text-black hover:bg-violet-600 hover:text-white font-bold"
 				>
 					Add subject
 				</Button>
-				{/* Add subject form */}
-				{showForm && (
-					<Form {...form}>
-						<form
-							onSubmit={form.handleSubmit(onSubmit)}
-							className="flex flex-row gap-5 my-3"
-						>
-							<FormField
-								control={form.control}
-								name="name"
-								render={({ field }) => (
-									<FormItem className="w-full">
-										<FormControl>
-											<Input
-												className="border-slate-700 w-30 lg:w-1/2"
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="frequency"
-								render={({ field }) => (
-									<FormItem className="">
-										<FormControl>
-											<Input
-												type="number"
-												className="border-slate-700 w-10 px-0 pl-2"
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="batch"
-								render={({ field }) => (
-									<FormItem>
-										<Select
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue placeholder="Batch" />
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												{batches}
-											</SelectContent>
-										</Select>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="teacher"
-								render={({ field }) => (
-									<FormItem>
-										<Select
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue placeholder="Teacher" />
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												{teacher}
-											</SelectContent>
-										</Select>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<Button
-								type="submit"
-								className="bg-blue-600 hover:bg-blue-700"
-							>
-								Add
-							</Button>
-						</form>
-					</Form>
-				)}
 
 				{/* List of existing subjects */}
 				<div className="flex flex-1 flex-row">
