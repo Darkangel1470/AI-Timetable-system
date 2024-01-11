@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { BatchValidation, SubjectValidation } from '@/lib/validation';
+import { SubjectValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
 	Form,
@@ -20,9 +20,7 @@ import { db } from '@/lib/firebase/firebaseConfig';
 import {
 	Select,
 	SelectContent,
-	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
@@ -32,7 +30,7 @@ const ManageSubjects = () => {
 	const [showForm, setShowForm] = useState(false);
 	const [subjects, setSubjects] = useState([]);
 	const [batches, setBatches] = useState([]);
-	const [teacher, setTeacher] = useState([])
+	const [teacher, setTeacher] = useState([]);
 	// States
 	// form definition
 	const form = useForm<z.infer<typeof SubjectValidation>>({
@@ -40,7 +38,7 @@ const ManageSubjects = () => {
 		defaultValues: {
 			name: '',
 			batch: '',
-			frequency: 1,
+			frequency: 3,
 		},
 	});
 	// useEffects
@@ -82,7 +80,7 @@ const ManageSubjects = () => {
 			setBatches(barr);
 		});
 	});
-	
+
 	useEffect(() => {
 		// get teacher
 		onSnapshot(collection(db, 'teachers'), (ss) => {
@@ -141,36 +139,37 @@ const ManageSubjects = () => {
 							onSubmit={form.handleSubmit(onSubmit)}
 							className="flex flex-row gap-5 my-3"
 						>
-						<FormField
-							control={form.control}
-							name="name"
-							render={({ field }) => (
-								<FormItem className="w-full">
-									<FormControl>
-										<Input
-											className="border-slate-700 w-30"											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="frequency"
-							render={({ field }) => (
-								<FormItem className="">
-									<FormControl>
-										<Input
-											type="text"
-											className="border-slate-700 w-10"
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+							<FormField
+								control={form.control}
+								name="name"
+								render={({ field }) => (
+									<FormItem className="w-full">
+										<FormControl>
+											<Input
+												className="border-slate-700 w-30 lg:w-1/2"
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="frequency"
+								render={({ field }) => (
+									<FormItem className="">
+										<FormControl>
+											<Input
+												type="number"
+												className="border-slate-700 w-10 px-0 pl-2"
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 							<FormField
 								control={form.control}
 								name="batch"

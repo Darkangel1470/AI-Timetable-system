@@ -5,7 +5,7 @@ import {
 	signInWithEmailAndPassword,
 	signOut,
 } from 'firebase/auth';
-import { addDoc, collection, getCountFromServer } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, doc, getCountFromServer, updateDoc } from 'firebase/firestore';
 
 export async function createUser(user: INewUser) {
 	try {
@@ -83,9 +83,17 @@ export async function createBatch(value){
 export async function createSubject(value){
 	console.log('value.name :>> ', value.name);
 	const docRef = await addDoc(collection(db, 'subjects'),value)
+	addSubtoBatchlist(value,docRef.id)
+
 }
+// subjectname to batchlist
+export async function addSubtoBatchlist(value, id){
+	await updateDoc(doc(db,"batches",value.batch),{
+		subList: arrayUnion(value.name),
+		subidList: arrayUnion(id)
+	})
 
-
+}
 
 export async function getCount(collectionName:string){
 	const ss = await getCountFromServer(collection(db, collectionName));

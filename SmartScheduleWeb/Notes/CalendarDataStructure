@@ -1,0 +1,241 @@
+// Data structure for calendar 
+
+const tysd= {
+    "06-01-2023":{
+        1:{
+            subject: "Machine Learning",
+            teacher: "Sunita",
+            duration: 50
+        },
+        2:{
+            subject: "Machine Learning",
+            teacher: "Sunita",
+            duration: 50
+        },
+        3:{
+            subject: "Machine Learning",
+            teacher: "Sunita",
+            duration: 50
+        },
+        1:{
+            subject: "Machine Learning",
+            teacher: "Sunita",
+            duration: 50
+        },
+    },
+    "06-01-2023":{
+        1:{
+            subject: "Machine Learning",
+            teacher: "Sunita",
+            duration: 50
+        },
+    },
+    "06-01-2023":{
+        1:{
+            subject: "Machine Learning",
+            teacher: "Sunita",
+            duration: 50
+        },
+    },
+}
+
+
+
+// max entries per depth
+
+subject = 3
+date = 10 + 3
+batch = 
+tysd
+
+
+
+// second way
+/* 
+
+store individual lecture into LectureCollection
+        {
+            lid: 1
+            subject: "Machine Learning",
+            teacher: "Sunita",
+            startTime: 9,
+            endTime: 10,
+        },
+        {
+            lid: 2
+            subject: "Machine Learning",
+            teacher: "Sunita",
+            startTime: 10,
+            endTime: 11,
+        },
+
+
+and then seperately store a list of id for the lecture for a date then store it into different dateCollection
+        {
+            id: 1
+            date = 1-1-2024
+            lectures = [1,2],
+        }
+        {
+            id: 2
+            date = 2-1-2024
+            lectures = [1,2],
+        }
+        {
+            id: 3
+            date = 2-1-2024
+            lectures = [4,5],
+        }
+        
+
+and then seperately store a list of id of daySchedule and use that for batch in batchCollection
+        {
+            batch: 'tysd',
+            daySchedules: [1,2,]
+        }
+        {
+            batch: 'tyit',
+            daySchedules: [3,]
+        }
+
+
+so when i want to get the timetable for today
+I will query to batchCollection to get the list of daySchedule that belongs to my batch collection || this won't work cause firebase 
+then i will query to dayCollection for each id of daycollection and check if their date matches with today and get the lecture id
+then i will query to LectureCollection for each id of lectures and store all the lecture data
+
+
+// third way
+
+        {
+            lid: 1
+            batch: tysd,
+            date: 1-1-2024
+            subject: "Machine Learning",
+            teacher: "Sunita",
+            startTime: 9,
+            endTime: 10,
+        },
+        {
+            lid: 2
+            batch: tysd,
+            date: 1-1-2024
+            subject: "something else",
+            teacher: "someone",
+            startTime: 10,
+            endTime: 9,
+        },
+        {
+            lid: 3
+            batch: tyit,
+            date: 1-1-2024
+            subject: "something else",
+            teacher: "someone",
+            startTime: 9,
+            endTime: 10,
+        },
+
+
+
+in this case if i want todays timetable then
+I will query LectureCollection for all the docs where batch matches 'tysd' then date matches '1-1-2024'
+
+in this case if want to check if the slot is free
+I will query lectureCollection for 30000 docs where 
+    batch is tysd and date is 1-1-2024 
+    and Start time is less than or equal to 9 
+    and end time is greater than 10
+and then do this for all 4 lecture for 6 batch, so 24 times querying and matching through 30000 document
+
+// Fourth way : Final
+
+    tysd-1-1-2024: {
+        {
+            lid: 1
+            batch: tysd,
+            subject: "Machine Learning",
+            teacher: "Sunita",
+            startTime: 9,
+            endTime: 10,
+        },
+        {
+            lid: 2
+            batch: tysd,
+            subject: "something else",
+            teacher: "fatima",
+            startTime: 10,
+            endTime: 9,
+        },
+        },
+        {
+            lid: 3
+            batch: tyit,
+            subject: "something else",
+            teacher: "fatima",
+            startTime: 9,
+            endTime: 10,
+        },
+
+Teacher timetable:
+    teacher-1-1-2024:{
+        {
+            startTime: 9,
+            endTime:10
+        }
+    }
+
+Lecture days = 9(months) * 24(dates) = 216
+dayDoc for all batch in a year= 216 * 6 = 1296
+
+lecture per day = 4
+Case 4: Create a weekly timetable for tysd
+get the lsit of sub for tysd (mm,da,ra,ML,cc,ot,bd, proj)
+how will i get list of sub for each batch
+
+
+store freq of each subject + topple up remaining freq
+for day in week:
+    check if tt exist for day: if no then
+    create tt for day 
+    for each sub, check if sub Teacher available:
+        check if subFreq[sub]>0
+        retrieve teacher timeatable for that day 
+        check if st+duration > dayEnd: if true then exit(next day)
+        check for each element where starttime <= st && endtime > et:if true
+            tt.day.add({
+                lid: 1
+                batch: tysd,
+                subject: "sub",
+                teacher: "subTeacher",
+                startTime: st,
+                endTime: st+duration,
+            }) 
+            subFreq[sub]--;
+check if subFreq for all sub is 0: if false then add to next week
+        
+        
+
+
+Case 4: get timetable for today
+query through 1296 dayDoc and get doc where day is today and batch is tysd
+
+case 4: Check if the slot is free
+get todays timetable for tysd and go through lectures(4) where 
+    and Start time is less than or equal to 9 
+    and end time is greater than 10 
+
+
+
+/*
+worries
+1. how will it handle custom time like 9:45 instead of 10 or 9:10? will have to work on slots
+one solution for this could be storing start and end timing and using that to compare with other event timings to check if free time is available
+
+Lecture stats:
+lecture per day 4
+lectures per week = 4*6 = 24
+lectures per month(23 days) = 23*24 = 552
+lectures per year (9 month) =552*9 = 4698
+lectures per year for all batch(6) = 6*4698= 28188
+
+roundoff = 30000 lectures per year

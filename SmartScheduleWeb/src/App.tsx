@@ -8,6 +8,7 @@ import RootLayout from './_root/RootLayout';
 import ManageTeachers from './_root/pages/ManageTeachers';
 import ManageBatches from './_root/pages/ManageBatches';
 import ManageSubjects from './_root/pages/ManageSubjects';
+import ManageTimetable from './_root/pages/ManageTimetable';
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="/manageteachers" element={<ManageTeachers />} />
           <Route path="/managebatches" element={<ManageBatches />} />
+          <Route path="/managetimetable" element={<ManageTimetable />} />
           <Route path="/managesubjects" element={<ManageSubjects />} />
         </Route>
       </Routes>

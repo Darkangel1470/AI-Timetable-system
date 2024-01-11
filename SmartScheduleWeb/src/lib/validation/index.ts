@@ -23,9 +23,9 @@ export const BatchValidation = z.object({
 })
 
 export const SubjectValidation = z.object({
-    name: z.string().min(2,{message:"Name can't be less than 2 letters"}).max(20,{message:"Name can't be more than 20 letters"}),
+    name: z.string().min(2,{message:"Name can't be less than 2 letters"}).max(30,{message:"Name can't be more than 30 letters"}),
     batch: z.string(),
     teacher: z.string(),
-    frequency: z.number().min(1,{message:"Lecture frequency cant be less than 1 per week"})
+    frequency: z.coerce.number().min(1,{message:"Lecture frequency cant be less than 1 per week"}).max(20,{message:"Lecture frequency cant be greater than 20 per week"})
 })
 

@@ -9,7 +9,7 @@ const Home = () => {
 	// states
 	const [teacherCount, setTeacherCount] = useState(0);
 	const [batchCount, setBatchCount] = useState(0);
-	const [subjectCount, setSubjectCount] = useState(0)
+	const [subjectCount, setSubjectCount] = useState(0);
 	// useffects
 	useEffect(() => {
 		//get teacher count
@@ -52,41 +52,54 @@ const Home = () => {
 	}
 
 	return (
-		<div className="flex flex-col w-full h-full p-10 box-border">
-			{/* panel name  */}
-			<div className="flex flex-row mb-5">
-				<h1 className="font-bold text-lg">Dashboard</h1>
-			</div>
-			{/* First row  */}
-			<div className="flex flex-row gap-3 ">
-				{/* Teachers card  */}
-				<DashboardCard
-					count={teacherCount}
-					label="Teacher"
-					onClickHandler={manageTeachers}
-				/>
-				{/* Batches card  */}
-				<DashboardCard
-					count={batchCount}
-					label="Batches"
-					onClickHandler={manageBatches}
+		<>
+		<div className="flex flex-1 flex-row items-top justify-start">
+			<div className="flex flex-col w-full h-full p-10 box-border">
+				{/* panel name  */}
+				<div className="flex flex-row mb-5">
+					<h1 className="font-bold text-lg">Dashboard</h1>
+				</div>
+				{/* First row  */}
+				<div className="flex flex-row gap-3 ">
+					{/* Teachers card  */}
+					<DashboardCard
+						count={teacherCount}
+						label="Teacher"
+						onClickHandler={manageTeachers}
 					/>
-				{/* SubjectS card  */}
-				<DashboardCard
-					count={subjectCount}
-					label="Subjects"
-					onClickHandler={manageSubjects}
-				/>
+					{/* Batches card  */}
+					<DashboardCard
+						count={batchCount}
+						label="Batches"
+						onClickHandler={manageBatches}
+					/>
+					{/* SubjectS card  */}
+					<DashboardCard
+						count={subjectCount}
+						label="Subjects"
+						onClickHandler={manageSubjects}
+					/>
+				</div>
+				{/* Second Row */}
+				<div className="flex flex-row gap-3 mt-5 ">
+					{/* timetable card*/}
+					<DashboardCard
+						label="Timetable"
+						onClickHandler={manageTimetable}
+					/>
+				</div>
 			</div>
-			{/* Second Row */}
-			<div className="flex flex-row gap-3 mt-5 ">
-				{/* timetable card*/}
-				<DashboardCard
-					label="Timetable"
-					onClickHandler={manageTimetable}
-				/>
+			{/* second column default details */}
+			<div className=" flex flex-col w-full h-full p-10 box-border">
+				{/* panel name  */}
+				<div className="flex flex-row mb-5">
+					<h1 className="font-bold text-lg">Dashboard</h1>
+				</div>
+				<div className="flex flex-1 bg-white rounded w-50"></div>
 			</div>
-		</div>
+			
+		 </div>
+		</>
 	);
 };
 
