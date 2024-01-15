@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 const Sidebar = () => {
 	const navigate = useNavigate();
 
-    return (
-		<div className="flex flex-col w-60 sm:w-60 p-5">
+	//function
+
+	return (
+		<div className="flex flex-col z-10  p-5 w-44 bg-white h-full absolute md:static lg:static xl:static 2xl:static">
 			{/* logo */}
 			<div className="flex flex-row h-20 justify-center items-center">
 				<img
@@ -65,6 +67,5 @@ const Sidebar = () => {
 
 export default Sidebar;
 function componentDidMount() {
-    throw new Error('Function not implemented.');
+	throw new Error('Function not implemented.');
 }
-
