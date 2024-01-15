@@ -3,6 +3,7 @@ import moment from 'moment';
 import Event from './Event';
 import HourSeparator from './HourSeparator';
 import WeekDates from './WeekDates';
+import { getWeekDates } from '@/lib/utils';
 
 function DaySchedule({day}) {
 	
@@ -74,30 +75,30 @@ const WeekTimetable = () => {
 
 	const WeekDays = []
 	for (const key in week){
-			WeekDays.push(<DaySchedule day={week[key]}/>)
+			WeekDays.push(<DaySchedule key={key} day={week[key]}/>)
 	}
 
 	// function
 	// useEffects
 	useEffect(() => {
 		//get currect week
-		const startOfWeek = moment('2024-01-14T15:05:27+05:30').startOf(
-			'isoWeek'
-		);
-		const endOfWeek = moment('2024-01-14T15:05:27+05:30').endOf('isoWeek');
+		// const startOfWeek = moment('2024-01-14T15:05:27+05:30').startOf(
+		// 	'isoWeek'
+		// );
+		// const endOfWeek = moment('2024-01-14T15:05:27+05:30').endOf('isoWeek');
 
-		// get dates of currect week
-		const days = [];
-		let day = startOfWeek;
+		// // get dates of currect week
+		// const days = [];
+		// let day = startOfWeek;
 
-		while (day <= endOfWeek) {
-			days.push(day.toDate());
-			day = day.clone().add(1, 'd');
-		}
-		days.forEach((day) => {
-			console.log('day :>> ', day);
-		});
-		setWeekDates(days);
+		// while (day <= endOfWeek) {
+		// 	days.push(day.toDate());
+		// 	day = day.clone().add(1, 'd');
+		// }
+		// days.forEach((day) => {
+		// 	console.log('day :>> ', day);
+		// });
+		setWeekDates(getWeekDates());
 	}, []);
 
 	return (

@@ -26,8 +26,8 @@ function DateItem({date}) {
 }
 
 const WeekDates = ({ dates }) => {
-    const dateList = dates.map(date =>(
-        <DateItem date={date} />
+    const dateList = dates.map((date) =>(
+        <DateItem key={date} date={date} />
     ))
 	useEffect(() => {
         

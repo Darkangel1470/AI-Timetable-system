@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebaseConfig';
 import { Button } from '@/components/ui/button';
+import GenerateTimetable from '@/AI/GenerateTimetable';
 
 /* Responsibility
  - Render Main UI for Timetable and its component
@@ -26,7 +27,7 @@ const ManageTimetable = () => {
 	// States
 	const [tableType, setTableType] = useState('batches');
 	const [options, setOptions] = useState([]);
-	const [timetableOf, setTimetableOf] = useState()
+	const [timetableOf, setTimetableOf] = useState("")
 	
 	// form definition
 
@@ -36,7 +37,7 @@ const ManageTimetable = () => {
 		// get teacher
 		onSnapshot(collection(db, tableType), (ss) => {
 			const tarr = ss.docs.map((doc) => (
-				<SelectItem value={doc.id}>{doc.data().name}</SelectItem>
+				<SelectItem key={doc.id} value={doc.id}>{doc.data().name}</SelectItem>
 			));
 			console.log('teacheers :>> ', tarr);
 			setOptions(tarr);
@@ -45,7 +46,7 @@ const ManageTimetable = () => {
 
 	// functions
 	function GenerateTT(){
-		
+		GenerateTimetable();
 	}
 
 	return (
@@ -73,7 +74,6 @@ const ManageTimetable = () => {
 					>
 						<SelectTrigger className="flex w-fit items-center bg-gray-100 h-10">
 							<SelectValue
-								value={tableType}
 								placeholder="Type"
 							/>
 						</SelectTrigger>
